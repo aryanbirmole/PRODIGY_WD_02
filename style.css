@@ -1,0 +1,232 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #f8fafc;
+  padding: 1.5rem;
+}
+
+.stopwatch-container {
+  width: 100%;
+  max-width: 440px;
+  height: 510px;
+  background: rgba(30, 41, 59, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 2rem 1.75rem;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+}
+
+.stopwatch-header h1 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.display-wrapper {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.display {
+  font-family: "SF Mono", "Roboto Mono", "Courier New", Courier, monospace;
+  font-size: 2.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+  color: #38bdf8;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.65rem;
+}
+
+.btn {
+  font-size: 0.95rem;
+  font-weight: 600;
+  height: 44px;
+  padding: 0 0.25rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+  color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-start {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.btn-pause {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.btn-lap {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+}
+
+.btn-reset {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.laps-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.laps-header {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.laps-header span:nth-child(2),
+.laps-header span:nth-child(3) {
+  text-align: right;
+}
+
+.lap-list {
+  list-style: none;
+  height: 136px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-right: 0.25rem;
+}
+
+.lap-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lap-list::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 999px;
+}
+
+.lap-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+}
+
+.lap-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.lap-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #64748b;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.lap-item {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr;
+  align-items: center;
+  padding: 0.65rem 0.75rem;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-family: "SF Mono", "Roboto Mono", "Courier New", Courier, monospace;
+  font-variant-numeric: tabular-nums;
+  color: #cbd5e1;
+  min-height: 40px;
+  box-sizing: border-box;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.lap-item span:nth-child(2),
+.lap-item span:nth-child(3) {
+  text-align: right;
+}
+
+.lap-item span:first-child {
+  font-weight: 600;
+  color: #38bdf8;
+}
+
+.lap-item span:nth-child(2) {
+  color: #a5f3fc;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+
+  .stopwatch-container {
+    height: 480px;
+    padding: 1.5rem 1.25rem;
+    gap: 1rem;
+  }
+
+  .display {
+    font-size: 2.15rem;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    height: 40px;
+  }
+}
